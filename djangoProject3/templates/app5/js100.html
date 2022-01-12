@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script>
+        $(function () {
+            $('#b1').click(function () {
+                data = {{ site }}
+                result = data[0] + data[1] + data[2]
+                alert(result)
+                $('div').text(result)
+            })
+            names = ''
+            {% for one in name %}
+                names = names + " " + '{{ one }}'
+            {% endfor %}
+            alert(names)
+
+            {#nemes2 = []#}
+            {#{% for one in name %}#}
+            {#    names2.push('{{ one }}')#}
+            {#{% endfor %}#}
+            {#alert(names2)#}
+
+            $('#b2').text('{{ url.u1 }}')
+            $('#b3').text('{{ url.u2 }}')
+            $('#b4').text('{{ url.u3 }}')
+        })
+    </script>
+</head>
+<body>
+<button id="b2" onclick="window.open('https://naver.com')"></button>
+<button id="b3" onclick="window.open('https://daum.net')"></button>
+<button id="b4" onclick="window.open('https://google.com')"></button>
+<button id="b1">나를 눌러요!</button>
+<div style="color: red"></div>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        * {
+            text-align: center;
+        }
+        table {
+            margin: 100px; /* 바깥여백(padding은 안쪽여백) */
+        }
+        .left {
+            width: 100px;
+        }
+        .right {
+            width: 300px;
+        }
+        #center {
+            height: 100px;
+        }
+    </style>
+</head>
+<body>
+<h3>{{ one.id }}번 게시물 상세페이지입니다.</h3>
+<table border="1">
+    <tr>
+        <td class="left">번호</td>
+        <td class="right">{{ one.id }}</td>
+    </tr>
+    <tr>
+        <td>제목</td>
+        <td>{{ one.title }}</td>
+    </tr>
+    <tr>
+        <td>내용</td>
+        <td id="center">{{ one.content }}</td>
+    </tr>
+    <tr>
+        <td>작성자</td>
+        <td>{{ one.writer }}</td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <a href="/app1/update/{{ one.id }}">
+                <button style="background: yellow">게시물수정</button>
+            </a>
+            <a href="/app1/delete/{{ one.id }}">
+                <button style="background: pink">게시물삭제</button>
+            </a>
+            <a href="/app1/list">
+                <button style="background: saddlebrown;color: white">게시물 리스트로</button>
+            </a>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

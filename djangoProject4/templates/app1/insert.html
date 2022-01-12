@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        * {
+            text-align: center;
+        }
+        table {
+            margin: 100px; /* 바깥여백(padding은 안쪽여백) */
+        }
+        #center {
+            height: 100px;
+        }
+        body {
+            background: lightgreen;
+        }
+        input, textarea {
+            background: pink;
+        }
+    </style>
+</head>
+<body>
+<h3>{{ one.id }}번 게시물 상세페이지입니다.</h3>
+<hr>
+<form action="/app1/insert2" method="post">
+    {% csrf_token %}
+    <table border="1">
+        <tr>
+            <td>제목</td>
+            <td>
+                <input name="title">
+            </td>
+        </tr>
+        <tr>
+            <td>내용</td>
+            <td id="center">
+                <textarea
+                        name="content"
+                        cols="20"
+                        rows="10"
+                        placeholder="여기에 내용을 입력해주세요.">
+                </textarea>
+            </td>
+        </tr>
+        <tr>
+            <td>작성자</td>
+            <td>
+                <input name="writer">
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <button style="background: black;color: white">게시글 등록</button>
+            </td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>
