@@ -1,29 +1,96 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+        <!-- jQuery JS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap.min.css'%}">
+    <!-- pybo CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css'%}">
+    <!-- jQuery JS -->
+
+    <script src="{% static 'jquery-3.4.1.min.js' %}"></script>
+    <!-- Bootstrap JS -->
+    <script src="{% static 'bootstrap.min.js'%}"></script>
+    <script>
+        $(function () {
+            $('#wb').click(function () {
+                content = $('#word').val()
+                $.ajax({
+                    url : "/app1/insert3",
+                    data : {
+                       bid : '{{ one.id }}',
+                       content : content,
+                       writer : '{{ request.session.writer }}'
+                    },
+                    success : function (res) {
+                        {#alert(json)#}
+                        {#res2_start = '<tr id=><td>'#}
+                        {#res2_end = '</td></tr>'#}
+                        res2 = '- <img src="/static/car.png" width="20" height="20"> ' +
+                              res.content + '(' + res.writer + ') <br>'
+                        alert(res2)
+                        $('#result').append(res2)
+                        {#$('#result').append(res)#}
+                        $('#word').val('')
+                    },
+                    error : function () {
+                        alert('ajax 오류!')
+                    }
+                })
+            })
+           $('.bdelete').click(function () {
+               alert($(this).attr('id'))
+               selector_id = $(this).attr('id')
+               $.ajax({
+                   url : '/app1/delete2',
+                   data : {
+                       id : selector_id
+                   },
+                   success : function (result) {
+                       alert(result)
+                       if (result == 1){
+                             $('#tr-' + selector_id).remove()
+                       }else{
+                               alert('댓글 요청 처리 에러...')
+                       }
+                   },
+                   error : function () {
+                       alert('댓글 요청 삭제 에러...')
+                   }
+               })
+
+              {# selector_tag = $('#tr-' + selector_id)#}
+              {# alert(selector_tag.html())#}
+              {#$('#reply-list').removeChild($('#tr-' + selector_id))#}
+              //$('#reply-list').load(location.href  + '#reply-list')
+           })
+        })//root4
+    </script>
     <style>
-        * {
+        *{
             text-align: center;
         }
         table {
-            margin: 100px; /* 바깥여백(padding은 안쪽여백) */
+            margin-left: 20px; /* 바깥쪽여백 <--> padding */
         }
         .left {
             width: 100px;
         }
-        .right {
+        .right{
             width: 300px;
         }
-        #center {
+        #center{
             height: 100px;
         }
     </style>
 </head>
 <body>
-<h3>{{ one.id }}번 게시물 상세페이지입니다.</h3>
+<h3>번호 {{ one.id }}번 게시물 상세페이지입니다.</h3>
+<hr>
 <table border="1">
+
     <tr>
         <td class="left">번호</td>
         <td class="right">{{ one.id }}</td>
@@ -43,16 +110,44 @@
     <tr>
         <td colspan="2">
             <a href="/app1/update/{{ one.id }}">
-                <button style="background: yellow">게시물수정</button>
+                <button style="background: yellow">게시물 수정</button>
             </a>
             <a href="/app1/delete/{{ one.id }}">
-                <button style="background: pink">게시물삭제</button>
+                <button style="background: pink">게시물 삭제</button>
             </a>
-            <a href="/app1/list">
-                <button style="background: saddlebrown;color: white">게시물 리스트로</button>
+             <a href="/app1/list">
+                <button style="background: blueviolet">게시물 리스트로</button>
             </a>
         </td>
     </tr>
+    <tr>
+        <td colspan="2">
+            댓글: <input id="word"> <button id="wb">댓글달기</button>
+        </td>
+    </tr>
+{#    <tr>#}
+{#        <td colspan="2" id="result" style="text-align: left">#}
+{#        <div style="text-align: left">#}
+{#            {% for r in list %}#}
+{#                - <img src="/static/car.png" width="20" height="20">#}
+{#                    {{ r.content }} ({{ r.writer }})<br>#}
+{#            {% endfor %}#}
+{#        </div>#}
+{#        </td>#}
+{#    </tr>#}
+</table>
+<table id="reply_list">
+     {% for r in list %}
+         <tr id="tr-{{r.id}}">
+             <td  style="text-align: left; width: 350px;">
+                - <img src="/static/car.png" width="20" height="20">
+                   {{ r.content }} ({{ r.writer }})<br>
+            </td>
+             <td  style="text-align: left; width: 100px;">
+                 <button style="background: lime" id="{{ r.id }}" class="bdelete">삭제</button>
+            </td>
+         </tr>
+     {% endfor %}
 </table>
 </body>
 </html>

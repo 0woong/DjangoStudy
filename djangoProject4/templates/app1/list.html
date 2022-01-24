@@ -1,8 +1,24 @@
+
+
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap.min.css'%}">
+    <!-- pybo CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css'%}">
+    <!-- jQuery JS -->
+
+    <script src="{% static 'jquery-3.4.1.min.js' %}"></script>
+
+    <!-- Bootstrap JS -->
+    <script src="{% static 'bootstrap.min.js'%}"></script>
+
     <style>
         td {
             text-align: center;
@@ -19,23 +35,25 @@
             font-weight: bold;
             font-style: italic;
         }
+        .td2:hover {
+            width: 200px;
+            background: aqua;
+            font-weight: bold;
+            text-decoration: underline;
+        }
+        .td3:hover {
+            width: 120px;
+            background: bisque;
+            font-weight: bold;
+        }
         .td2 {
             width: 200px;
         }
-        .td2:hover {
-            width: 100px;
-            background: darksalmon;
-            font-weight: bolder;
-            font-style: normal;
-        }
         .td3 {
-            width: 300px;
+            width: 120px;
         }
-        .td3:hover {
-            width: 100px;
-            background: honeydew;
-            font-weight: lighter;
-            font-style: oblique;
+        table, h3, button {
+            margin-left: 200px;
         }
 
     </style>
@@ -44,7 +62,7 @@
 <h3>게시판 리스트입니다.</h3>
 <hr color="blue">
 <a href="/app1/insert">
-    <button style="background: red;color: white;font-weight: bold">
+    <button style="background: red; color: white; font-weight: bold;">
         게시판 글쓰기
     </button>
 </a>
@@ -54,15 +72,59 @@
         <td class="td2 tdtop">제목</td>
         <td class="td3 tdtop">작성자</td>
     </tr>
-{% if list %}
-    {% for one in list %}
-        <tr>
-            <td class="td1">{{ one.id }}</td>
-            <td class="td2"><a href="/app1/one/{{ one.id }}">{{ one.title }}</a></td>
-            <td class="td3">{{ one.writer }}</td>
-        </tr>
-    {% endfor %}
-{% endif %}
+    {% if list %}
+        {% for one in list %}
+            <tr>=
+                <td class="td1">{{one.id}}</td>
+                <td class="td2">
+                    <a href="/app1/one/{{one.id}}">
+                        {{one.title}}
+                    </a>
+                </td>
+                <td class="td3">{{one.writer}}</td>
+            </tr>
+        {% endfor %}
+    {% endif %}
 </table>
+     <!-- 페이징처리 시작 -->
+    <ul class="pagination justify-content-center">
+        <!-- 이전페이지 -->
+        {%  if list.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ list.previous_page_number }}">이전</a>
+        </li>
+        {%  else %}
+        <li class="page-item disabled">
+            <a class="page-link" href="#">이전</a>
+        </li>
+        {% endif %}
+        <!-- 페이지리스트 -->
+        {% for page_number in list.paginator.page_range %}
+            {% if page_number >= list.number|add:-3 and page_number <= list.number|add:3 %}
+            {% if page_number == list.number %}
+                <li  class="page-item active" aria-current="page">
+                    <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
+                </li>
+            {% else %}
+                 <li class="page-item">
+                    <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
+                </li>
+            {% endif %}
+            {% endif %}
+        {% endfor %}
+        <!-- 다음페이지 -->
+        {%  if list.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ list.next_page_number }}">다음</a>
+        </li>
+        {%  else %}
+        <li class="page-item disabled">
+            <a class="page-link" href="#">다음</a>
+        </li>
+        {% endif %}
+        <li>
+
+        </li>
+    </ul>
 </body>
 </html>
