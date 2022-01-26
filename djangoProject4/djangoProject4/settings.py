@@ -101,23 +101,14 @@ WSGI_APPLICATION = 'djangoProject4.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
 DATABASES = {
-    'default' : {
-        'ENGINE': 'django.db.backends.mysql', # 고정
-        'NAME': 'mldb', # DB 이름
-        'USER': 'root', # 계정
-        'PASSWORD': 'gkdl1234', # 암호
-        'HOST': 'database-1.cp60r42dcdst.us-east-2.rds.amazonaws.com', # IP
-        'PORT': '3306' # 별도로 설정한 게 아니라면 3306일 것이다.
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+
 
 
 # Password validation
@@ -156,12 +147,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 # 파일의 끝에 aws 관련 내용을 추가
-AWS_ACCESS_KEY_ID = 'AKIAWDMSQB2ULROJSFNL' # 사용자키
-AWS_SECRET_ACCESS_KEY = 'Bo5XnIOQbrc46BVJcqa9SarKBv8/K9XzsHg9nQto' # 사용자비밀키
-AWS_S3_REGION_NAME = 'us-east-2' # 지역
-AWS_STORAGE_BUCKET_NAME = 'eroe0120' # 버킷이름
-AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.{AWS_S3_REGION_NAME}.amazon.com"
-AWS_DEFAULT_ACL = 'public-read'
+
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
